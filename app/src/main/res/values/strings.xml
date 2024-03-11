@@ -76,4 +76,5 @@
         in lobortis sem porta sed. Integer id ultrices magna, in luctus elit. Sed a pellentesque
         est.\n\n
     </string>
+    <string name="recipe_description">Enter some recipe description</string>
 </resources>
