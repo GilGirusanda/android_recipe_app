@@ -77,4 +77,9 @@
         est.\n\n
     </string>
     <string name="recipe_description">Enter some recipe description</string>
+
+    <string name="breakfast">Breakfast</string>
+    <string name="lunch">Lunch</string>
+    <string name="dinner">Dinner</string>
+    <string name="search">Search</string>
 </resources>
