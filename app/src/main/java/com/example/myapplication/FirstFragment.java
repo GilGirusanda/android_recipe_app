@@ -4,38 +4,32 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.databinding.FragmentFirstBinding;
 import com.example.myapplication.db.DbManager;
-import com.example.myapplication.models.RecipeModel;
-
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import com.example.myapplication.services.ImageService;
+import com.example.myapplication.services.RecipeService;
 
 public class FirstFragment extends Fragment {
 
     private FragmentFirstBinding binding;
 
     DbManager db;
+    RecipeService recipeService;
+    ImageService imageService;
 
     @Override
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState
     ) {
-        // INIT DB MANAGER
-        db = new DbManager(getContext());
+        // INIT SERVICES
+        recipeService = new RecipeService(getContext());
+        imageService = new ImageService(getContext());
 
         binding = FragmentFirstBinding.inflate(inflater, container, false);
         return binding.getRoot();
