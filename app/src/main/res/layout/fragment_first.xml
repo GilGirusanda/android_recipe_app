@@ -34,23 +34,28 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <Button
+
+                <ImageButton
                     android:id="@+id/btn_breakfast"
                     android:layout_width="0dp"
                     android:layout_height="150dp"
                     android:layout_margin="5dp"
                     android:layout_weight="1"
-                    android:textSize="24sp"
-                    android:text="@string/breakfast" />
+                    android:background="@drawable/rounded_btn"
+                    android:contentDescription="@string/breakfast"
+                    android:src="@drawable/breakfast"
+                    android:textSize="24sp" />
 
-                <Button
+                <ImageButton
                     android:id="@+id/btn_lunch"
                     android:layout_width="0dp"
                     android:layout_height="150dp"
                     android:layout_margin="5dp"
                     android:layout_weight="1"
-                    android:textSize="24sp"
-                    android:text="@string/lunch" />
+                    android:background="@drawable/rounded_btn"
+                    android:contentDescription="@string/lunch"
+                    android:src="@drawable/lunch"
+                    android:textSize="24sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -58,23 +63,27 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <Button
+                <ImageButton
                     android:id="@+id/btn_dinner"
                     android:layout_width="0dp"
                     android:layout_height="150dp"
                     android:layout_margin="5dp"
                     android:layout_weight="1"
-                    android:textSize="24sp"
-                    android:text="@string/dinner" />
+                    android:background="@drawable/rounded_btn"
+                    android:contentDescription="@string/dinner"
+                    android:src="@drawable/dinner"
+                    android:textSize="24sp" />
 
-                <Button
+                <ImageButton
                     android:id="@+id/btn_search"
                     android:layout_width="0dp"
                     android:layout_height="150dp"
                     android:layout_margin="5dp"
                     android:layout_weight="1"
-                    android:textSize="24sp"
-                    android:text="@string/search" />
+                    android:background="@drawable/rounded_btn"
+                    android:contentDescription="@string/search"
+                    android:src="@drawable/search"
+                    android:textSize="24sp" />
             </LinearLayout>
         </LinearLayout>
 

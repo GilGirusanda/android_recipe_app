@@ -51,7 +51,7 @@ public class FirstFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        db.close();
+//        db.close();
         binding = null;
     }
 
