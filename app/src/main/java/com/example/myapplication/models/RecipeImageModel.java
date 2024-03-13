@@ -10,13 +10,18 @@ public class RecipeImageModel {
     private int id;
     private String name;
     private Bitmap image;
+    private int recipeId;
 
     // Constructors
 
-    public RecipeImageModel(int id, String name, Bitmap image) {
+    public RecipeImageModel(int id, String name, Bitmap image, Integer recipeId) {
         this.id = id;
         this.name = name;
         this.image = image;
+        if(recipeId == null)
+            this.recipeId = 0;
+        else
+            this.recipeId = recipeId.intValue();
     }
 
     public RecipeImageModel() {
@@ -35,6 +40,10 @@ public class RecipeImageModel {
         return this.image;
     }
 
+    public int getRecipeId() {
+        return this.recipeId;
+    }
+
     // Setters
 
     public void setId(int id) {
@@ -47,6 +56,10 @@ public class RecipeImageModel {
 
     public void setImage(Bitmap image) {
         this.image = image;
+    }
+
+    public void setRecipeId(int recipeId) {
+        this.recipeId = recipeId;
     }
 
     @NonNull
