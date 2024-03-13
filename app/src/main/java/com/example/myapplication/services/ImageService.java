@@ -8,6 +8,7 @@ import static com.example.myapplication.db.DbManager.COLUMN_RECIPE_ID;
 import static com.example.myapplication.db.DbManager.COLUMN_RECIPE_TITLE;
 import static com.example.myapplication.db.DbManager.TABLE_IMAGE;
 import static com.example.myapplication.db.DbManager.TABLE_RECIPE;
+import static com.example.myapplication.db.DbManager.COLUMN_IMAGE_RECIPE_ID;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -45,9 +46,11 @@ public class ImageService {
         Bitmap imageToSave = imageModel.getImage();
         imageToSave.compress(Bitmap.CompressFormat.PNG, 100, imageOutputStream);
         imageInBytes = imageOutputStream.toByteArray();
+        int recipeId = imageModel.getRecipeId();
 
         cv.put(COLUMN_IMAGE_NAME, imageModel.getName());
         cv.put(COLUMN_IMAGE, imageInBytes);
+        cv.put(COLUMN_IMAGE_RECIPE_ID, recipeId);
 
         long insert = db.insert(TABLE_IMAGE, null, cv);
 
@@ -73,8 +76,9 @@ public class ImageService {
                     int imageId = cursor.getInt(0);
                     String imageName = cursor.getString(1);
                     byte[] imageBytes = cursor.getBlob(2);
+                    int recipeId = cursor.getInt(3);
                     Bitmap imageValue = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
-                    recipeList.add(new RecipeImageModel(imageId, imageName, imageValue));
+                    recipeList.add(new RecipeImageModel(imageId, imageName, imageValue, recipeId));
                 } while (cursor.moveToNext());
             } else {
                 // failure. no data
@@ -101,8 +105,9 @@ public class ImageService {
                     int imageId = cursor.getInt(0);
                     String imageName = cursor.getString(1);
                     byte[] imageBytes = cursor.getBlob(2);
+                    int recipeId = cursor.getInt(3);
                     Bitmap imageValue = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
-                    recipeList.add(new RecipeImageModel(imageId, imageName, imageValue));
+                    recipeList.add(new RecipeImageModel(imageId, imageName, imageValue, recipeId));
                 } while (cursor.moveToNext());
             } else {
                 // failure. no data
@@ -126,8 +131,9 @@ public class ImageService {
                 // go through the result set
                 String imageName = cursor.getString(1);
                 byte[] imageBytes = cursor.getBlob(2);
+                int recipeId = cursor.getInt(3);
                 Bitmap imageValue = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
-                foundImage = new RecipeImageModel(imageId, imageName, imageValue);
+                foundImage = new RecipeImageModel(imageId, imageName, imageValue, recipeId);
             } else {
                 // failure. no data
             }
@@ -147,6 +153,30 @@ public class ImageService {
 
         ContentValues values = new ContentValues();
         values.put(COLUMN_IMAGE_NAME, newImageModel.getName());
+        values.put(COLUMN_IMAGE, imageInBytes);
+
+        int rowsAffected = db.update(TABLE_RECIPE, values, COLUMN_RECIPE_ID+" = ?", new String[]{String.valueOf(newImageModel.getId())});
+        return rowsAffected;
+    }
+
+    public int updateName(String newName) {
+        SQLiteDatabase db = manager.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_IMAGE_NAME, newName);
+
+        int rowsAffected = db.update(TABLE_RECIPE, values, COLUMN_RECIPE_ID+" = ?", new String[]{String.valueOf(newImageModel.getId())});
+        return rowsAffected;
+    }
+
+    public int updateImage(Bitmap img) {
+        SQLiteDatabase db = manager.getWritableDatabase();
+
+        Bitmap imageToSave = img;
+        imageToSave.compress(Bitmap.CompressFormat.PNG, 100, imageOutputStream);
+        imageInBytes = imageOutputStream.toByteArray();
+        
+        ContentValues values = new ContentValues();
         values.put(COLUMN_IMAGE, imageInBytes);
 
         int rowsAffected = db.update(TABLE_RECIPE, values, COLUMN_RECIPE_ID+" = ?", new String[]{String.valueOf(newImageModel.getId())});
