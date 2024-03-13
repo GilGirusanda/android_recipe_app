@@ -18,7 +18,6 @@ public class FirstFragment extends Fragment {
 
     private FragmentFirstBinding binding;
 
-    DbManager db;
     RecipeService recipeService;
     ImageService imageService;
 
@@ -51,7 +50,6 @@ public class FirstFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-//        db.close();
         binding = null;
     }
 
