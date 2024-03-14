@@ -82,4 +82,5 @@
     <string name="lunch">Lunch</string>
     <string name="dinner">Dinner</string>
     <string name="search">Search</string>
+    <string name="recipeImage">Recipe image</string>
 </resources>
