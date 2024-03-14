@@ -159,17 +159,17 @@ public class ImageService {
         return rowsAffected;
     }
 
-    public int updateName(String newName) {
+    public int updateName(int imgId, String newName) {
         SQLiteDatabase db = manager.getWritableDatabase();
 
         ContentValues values = new ContentValues();
         values.put(COLUMN_IMAGE_NAME, newName);
 
-        int rowsAffected = db.update(TABLE_RECIPE, values, COLUMN_RECIPE_ID+" = ?", new String[]{String.valueOf(newImageModel.getId())});
+        int rowsAffected = db.update(TABLE_RECIPE, values, COLUMN_RECIPE_ID+" = ?", new String[]{String.valueOf(imgId)});
         return rowsAffected;
     }
 
-    public int updateImage(Bitmap img) {
+    public int updateImage(int imgId, Bitmap img) {
         SQLiteDatabase db = manager.getWritableDatabase();
 
         Bitmap imageToSave = img;
@@ -179,7 +179,7 @@ public class ImageService {
         ContentValues values = new ContentValues();
         values.put(COLUMN_IMAGE, imageInBytes);
 
-        int rowsAffected = db.update(TABLE_RECIPE, values, COLUMN_RECIPE_ID+" = ?", new String[]{String.valueOf(newImageModel.getId())});
+        int rowsAffected = db.update(TABLE_RECIPE, values, COLUMN_RECIPE_ID+" = ?", new String[]{String.valueOf(imgId)});
         return rowsAffected;
     }
 
