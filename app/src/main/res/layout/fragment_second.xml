@@ -37,8 +37,11 @@
         <ScrollView
             android:id="@+id/recipeDescriptionScrollView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="300dp"
             android:layout_marginTop="16dp"
+            android:nestedScrollingEnabled="true"
+            android:scrollbarSize="10dp"
+            android:scrollbars="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -48,24 +51,9 @@
                 android:id="@+id/recipeDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:maxLines="18"
-                android:scrollbarStyle="insideOverlay"
-                android:scrollbars="vertical"
-                android:text="@string/lorem_ipsum_2" />
-        </ScrollView>
+                app:layout_constraintHorizontal_bias="0.0" />
 
-        <Button
-            android:id="@+id/button_second_next"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="24dp"
-            android:text="@string/next"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/button_second_prev"
-            app:layout_constraintTop_toBottomOf="@+id/recipeDescriptionScrollView" />
+        </ScrollView>
 
         <Button
             android:id="@+id/button_second_prev"
@@ -74,9 +62,21 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="24dp"
-            android:text="@string/previous"
+            android:text="@string/back"
             app:layout_constraintEnd_toStartOf="@+id/button_second_next"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/recipeDescriptionScrollView" />
+
+        <Button
+            android:id="@+id/button_second_next"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="24dp"
+            android:text="@string/nextRecipe"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/button_second_prev"
             app:layout_constraintTop_toBottomOf="@+id/recipeDescriptionScrollView" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

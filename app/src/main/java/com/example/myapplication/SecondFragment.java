@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import java.util.Random;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
@@ -22,8 +23,6 @@ import java.util.List;
 public class SecondFragment extends Fragment {
 
     private FragmentSecondBinding binding;
-    private RecipeService recipeService;
-    private ImageService imageService;
     private List<RecipeModel> meals;
 
     @Override
@@ -32,38 +31,10 @@ public class SecondFragment extends Fragment {
             Bundle savedInstanceState
     ) {
         // INIT SERVICES
-        recipeService = new RecipeService(getContext());
-        imageService = new ImageService(getContext());
+        RecipeService recipeService = new RecipeService(getContext());
+        ImageService imageService = new ImageService(getContext());
 
         meals = recipeService.getAll();
-
-        meals.get(0).setDescription("""
-                Ingredients:
-                1. GGGGGGGGGGGGGGGG
-                2. GGGGGGGGGGGGGGGG
-                3. GGGGGGGGGGGGGGGG
-                4. GGGGGGGGGGGGGGGG
-                5. GGGGGGGGGGGGGGGG
-                6. GGGGGGGGGGGGGGGG
-                7. GGGGGGGGGGGGGGGG
-                8. GGGGGGGGGGGGGGGG
-                9. GGGGGGGGGGGGGGGG
-                10. GGGGGGGGGGGGGGGG
-                
-                Steps:
-                1. GGGGGGGGGGGGGGGG
-                2. GGGGGGGGGGGGGGGG
-                3. GGGGGGGGGGGGGGGG
-                4. GGGGGGGGGGGGGGGG
-                5. GGGGGGGGGGGGGGGG
-                6. GGGGGGGGGGGGGGGG
-                7. GGGGGGGGGGGGGGGG
-                8. GGGGGGGGGGGGGGGG
-                9. GGGGGGGGGGGGGGGG
-                10. GGGGGGGGGGGGGGGG
-                """);
-
-        recipeService.update(meals.get(0));
 
 //        String myString = getArguments().getString("mealType");
 //        Log.d("meals", "meals --> " + meals);
@@ -80,8 +51,7 @@ public class SecondFragment extends Fragment {
         binding.buttonSecondNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                NavHostFragment.findNavController(SecondFragment.this)
-                        .navigate(R.id.action_SecondFragment_to_ThirdFragment);
+                setCurrentMeal();
             }
         });
 
@@ -93,8 +63,7 @@ public class SecondFragment extends Fragment {
             }
         });
 
-        binding.recipeTitle.setText(meals.get(0).getTitle());
-        binding.recipeDescription.setText(meals.get(0).getDescription());
+        setCurrentMeal();
 
         binding.recipeDescription.setMovementMethod(new ScrollingMovementMethod());
     }
@@ -105,4 +74,12 @@ public class SecondFragment extends Fragment {
         binding = null;
     }
 
+    private void setCurrentMeal() {
+        Random rand = new Random();
+
+        int currentMealInd = rand.nextInt(meals.size());
+
+        binding.recipeTitle.setText(meals.get(currentMealInd).getTitle());
+        binding.recipeDescription.setText(meals.get(currentMealInd).getDescription());
+    }
 }
