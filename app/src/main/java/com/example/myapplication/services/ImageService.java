@@ -144,6 +144,41 @@ public class ImageService {
         return Optional.ofNullable(foundImage);
     }
 
+    public Optional<RecipeImageModel> findImageByRecipeId(int recipeId) {
+    Optional<RecipeModel> recipeModelOptional = findById(recipeId);
+
+    if (recipeModelOptional.isPresent()) {
+        RecipeModel recipeModel = recipeModelOptional.get();
+
+        // пet id of the found RecModel
+        int foundRecipeId = recipeModel.getId();
+        // query to find the RecImgModel by recipeId
+        String queryString = String.format("SELECT * FROM %s WHERE recipe_id = %s;", TABLE_IMAGE, foundRecipeId);
+        
+        try (SQLiteDatabase db = manager.getReadableDatabase();
+             Cursor cursor = db.rawQuery(queryString, null)
+        ) {
+            if (cursor.moveToFirst()) {
+                int imageId = cursor.getInt(0);
+                String imageName = cursor.getString(1);
+                byte[] imageBytes = cursor.getBlob(2);
+                Bitmap imageValue = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
+                return Optional.of(new RecipeImageModel(imageId, imageName, imageValue, foundRecipeId));
+            } else {
+                // no image
+                return Optional.empty();
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return Optional.empty();
+        }
+    } else {
+        // recipe not found
+        return Optional.empty();
+    }
+}
+
+
     public int update(RecipeImageModel newImageModel) {
         SQLiteDatabase db = manager.getWritableDatabase();
 
