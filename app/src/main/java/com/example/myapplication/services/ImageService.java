@@ -31,10 +31,12 @@ public class ImageService {
 
     DbManager manager;
     ByteArrayOutputStream imageOutputStream;
+    private final RecipeService recipeService;
     byte[] imageInBytes;
 
     public ImageService(Context ctx) {
         this.manager = DbManager.getInstance(ctx);
+        this.recipeService = new RecipeService(ctx);
     }
 
     public boolean addOne(RecipeImageModel imageModel) {
@@ -145,12 +147,12 @@ public class ImageService {
     }
 
     public Optional<RecipeImageModel> findImageByRecipeId(int recipeId) {
-    Optional<RecipeModel> recipeModelOptional = findById(recipeId);
+    Optional<RecipeModel> recipeModelOptional = recipeService.findById(recipeId);
 
     if (recipeModelOptional.isPresent()) {
         RecipeModel recipeModel = recipeModelOptional.get();
 
-        // пet id of the found RecModel
+        // get id of the found RecModel
         int foundRecipeId = recipeModel.getId();
         // query to find the RecImgModel by recipeId
         String queryString = String.format("SELECT * FROM %s WHERE recipe_id = %s;", TABLE_IMAGE, foundRecipeId);
