@@ -2,9 +2,6 @@ package com.example.myapplication;
 
 import java.util.Optional;
 import java.util.Random;
-
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
@@ -30,8 +27,7 @@ public class SecondFragment extends Fragment {
     private FragmentSecondBinding binding;
     private List<RecipeModel> meals;
 
-    RecipeService recipeService;
-    ImageService imageService;
+    private ImageService imageService;
 
     @Override
     public View onCreateView(
@@ -39,7 +35,7 @@ public class SecondFragment extends Fragment {
             Bundle savedInstanceState
     ) {
         // INIT SERVICES
-        recipeService = new RecipeService(getContext());
+        RecipeService recipeService = new RecipeService(getContext());
         imageService = new ImageService(getContext());
 
         meals = recipeService.getAll();
@@ -49,6 +45,7 @@ public class SecondFragment extends Fragment {
 //        Toast.makeText(getContext(), getArguments().getString("mealType"), Toast.LENGTH_LONG).show();
 
         binding = FragmentSecondBinding.inflate(inflater, container, false);
+
         return binding.getRoot();
     }
 
@@ -83,8 +80,13 @@ public class SecondFragment extends Fragment {
 
     private void setCurrentMeal() {
         Random rand = new Random();
-
         int currentMealInd = rand.nextInt(meals.size());
+
+        Optional<RecipeImageModel> image = imageService.findImageByRecipeId(currentMealInd);
+
+        if (image.isPresent()) {
+            binding.recipeImage.setImageBitmap(image.get().getImage());
+        }
 
         binding.recipeTitle.setText(meals.get(currentMealInd).getTitle());
         binding.recipeDescription.setText(meals.get(currentMealInd).getDescription());

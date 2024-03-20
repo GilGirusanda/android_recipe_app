@@ -186,7 +186,6 @@ public class ImageService {
     }
 }
 
-
     public int update(RecipeImageModel newImageModel) {
         SQLiteDatabase db = manager.getWritableDatabase();
 

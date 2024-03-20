@@ -10,15 +10,10 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.myapplication.databinding.FragmentFirstBinding;
-import com.example.myapplication.services.ImageService;
-import com.example.myapplication.services.RecipeService;
 
 public class FirstFragment extends Fragment {
 
     private FragmentFirstBinding binding;
-
-    RecipeService recipeService;
-    ImageService imageService;
 
     @Override
     public View onCreateView(
@@ -26,6 +21,7 @@ public class FirstFragment extends Fragment {
             Bundle savedInstanceState
     ) {
         binding = FragmentFirstBinding.inflate(inflater, container, false);
+
         return binding.getRoot();
     }
 
