@@ -46,7 +46,7 @@ public class DbManager extends SQLiteOpenHelper {
                     %s integer primary key autoincrement,
                     %s text,
                     %s blob,
-                    %s int references %s(%s)
+                    %s int unique references %s(%s)
                 );
                 """, TABLE_IMAGE, COLUMN_IMAGE_ID, COLUMN_IMAGE_NAME, COLUMN_IMAGE, COLUMN_IMAGE_RECIPE_ID, TABLE_RECIPE, COLUMN_RECIPE_ID);
 

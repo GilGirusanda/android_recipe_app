@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.database.CursorWindow;
 import android.os.Bundle;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -19,6 +20,8 @@ import com.example.myapplication.databinding.ActivityMainBinding;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.lang.reflect.Field;
+
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration appBarConfiguration;
@@ -27,6 +30,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        try {
+            Field field = CursorWindow.class.getDeclaredField("sCursorWindowSize");
+            field.setAccessible(true);
+            field.set(null, 100 * 1024 * 1024); // 100MB is the new size
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());

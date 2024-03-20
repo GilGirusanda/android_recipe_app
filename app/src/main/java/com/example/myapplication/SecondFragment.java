@@ -1,6 +1,10 @@
 package com.example.myapplication;
 
+import java.util.Optional;
 import java.util.Random;
+
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
@@ -14,6 +18,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.myapplication.databinding.FragmentSecondBinding;
+import com.example.myapplication.models.RecipeImageModel;
 import com.example.myapplication.models.RecipeModel;
 import com.example.myapplication.services.ImageService;
 import com.example.myapplication.services.RecipeService;
@@ -25,21 +30,23 @@ public class SecondFragment extends Fragment {
     private FragmentSecondBinding binding;
     private List<RecipeModel> meals;
 
+    RecipeService recipeService;
+    ImageService imageService;
+
     @Override
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState
     ) {
         // INIT SERVICES
-        RecipeService recipeService = new RecipeService(getContext());
-        ImageService imageService = new ImageService(getContext());
+        recipeService = new RecipeService(getContext());
+        imageService = new ImageService(getContext());
 
         meals = recipeService.getAll();
 
 //        String myString = getArguments().getString("mealType");
 //        Log.d("meals", "meals --> " + meals);
 //        Toast.makeText(getContext(), getArguments().getString("mealType"), Toast.LENGTH_LONG).show();
-
 
         binding = FragmentSecondBinding.inflate(inflater, container, false);
         return binding.getRoot();

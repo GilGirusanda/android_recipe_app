@@ -5,13 +5,13 @@ import androidx.annotation.Nullable;
 
 public class RecipeModel {
 
-    private int id;
+    private Integer id;
     private String title;
     private String description;
 
     // Constructors
 
-    public RecipeModel(int id, String title, String description) {
+    public RecipeModel(Integer id, String title, String description) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -21,7 +21,7 @@ public class RecipeModel {
     }
 
     // Getters
-    public int getId() {
+    public Integer getId() {
         return this.id;
     }
 
@@ -35,7 +35,7 @@ public class RecipeModel {
 
     // Setters
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

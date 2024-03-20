@@ -94,6 +94,30 @@ public class RecipeService {
         return Optional.ofNullable(foundRecipe);
     }
 
+    public Optional<RecipeModel> findByTitle(String title) {
+        RecipeModel foundRecipe = null;
+        String queryString = String.format("select * from %s where title = '%s';", TABLE_RECIPE, title);
+
+        try (SQLiteDatabase db = manager.getReadableDatabase();
+             Cursor cursor = db.rawQuery(queryString, null)
+        ) {
+            // get data from the db
+            if (cursor.moveToFirst()) {
+                // go through the result set
+                int recipeId = cursor.getInt(0);
+                String recipeTitle = cursor.getString(1);
+                String recipeDescription = cursor.getString(2);
+                foundRecipe = new RecipeModel(recipeId, recipeTitle, recipeDescription);
+            } else {
+                // failure. no data
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        return Optional.ofNullable(foundRecipe);
+    }
+
     public int update(RecipeModel newRecipeModel) {
         SQLiteDatabase db = manager.getWritableDatabase();
 

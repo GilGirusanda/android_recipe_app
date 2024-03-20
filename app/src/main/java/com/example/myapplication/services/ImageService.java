@@ -13,6 +13,7 @@ import static com.example.myapplication.db.DbManager.COLUMN_IMAGE_RECIPE_ID;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -37,6 +38,7 @@ public class ImageService {
     public ImageService(Context ctx) {
         this.manager = DbManager.getInstance(ctx);
         this.recipeService = new RecipeService(ctx);
+        this.imageOutputStream = new ByteArrayOutputStream();
     }
 
     public boolean addOne(RecipeImageModel imageModel) {
@@ -54,8 +56,12 @@ public class ImageService {
         cv.put(COLUMN_IMAGE, imageInBytes);
         cv.put(COLUMN_IMAGE_RECIPE_ID, recipeId);
 
-        long insert = db.insert(TABLE_IMAGE, null, cv);
-
+        long insert;
+        try {
+            insert = db.insert(TABLE_IMAGE, null, cv);
+        } catch (SQLiteConstraintException ex) {
+            insert = -1;
+        }
         db.close();
         if (insert == -1) {
             return false;

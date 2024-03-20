@@ -7,14 +7,14 @@ import androidx.annotation.Nullable;
 
 public class RecipeImageModel {
 
-    private int id;
+    private Integer id;
     private String name;
     private Bitmap image;
-    private int recipeId;
+    private Integer recipeId;
 
     // Constructors
 
-    public RecipeImageModel(int id, String name, Bitmap image, Integer recipeId) {
+    public RecipeImageModel(Integer id, String name, Bitmap image, Integer recipeId) {
         this.id = id;
         this.name = name;
         this.image = image;
@@ -28,7 +28,7 @@ public class RecipeImageModel {
     }
 
     // Getters
-    public int getId() {
+    public Integer getId() {
         return this.id;
     }
 
@@ -40,13 +40,13 @@ public class RecipeImageModel {
         return this.image;
     }
 
-    public int getRecipeId() {
+    public Integer getRecipeId() {
         return this.recipeId;
     }
 
     // Setters
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -58,7 +58,7 @@ public class RecipeImageModel {
         this.image = image;
     }
 
-    public void setRecipeId(int recipeId) {
+    public void setRecipeId(Integer recipeId) {
         this.recipeId = recipeId;
     }
 
