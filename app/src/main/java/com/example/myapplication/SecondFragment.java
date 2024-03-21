@@ -1,14 +1,13 @@
 package com.example.myapplication;
 
+import java.util.Collections;
 import java.util.Optional;
-import java.util.Random;
+
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -25,24 +24,19 @@ import java.util.List;
 public class SecondFragment extends Fragment {
 
     private FragmentSecondBinding binding;
-    private List<RecipeModel> meals;
-
-    private ImageService imageService;
+    private List<RecipeModel> recipes;
+    private List<RecipeImageModel> images;
 
     @Override
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState
     ) {
-        // INIT SERVICES
         RecipeService recipeService = new RecipeService(getContext());
-        imageService = new ImageService(getContext());
+        ImageService imageService = new ImageService(getContext());
 
-        meals = recipeService.getAll();
-
-//        String myString = getArguments().getString("mealType");
-//        Log.d("meals", "meals --> " + meals);
-//        Toast.makeText(getContext(), getArguments().getString("mealType"), Toast.LENGTH_LONG).show();
+        recipes = recipeService.getAll();
+        images = imageService.getAll();
 
         binding = FragmentSecondBinding.inflate(inflater, container, false);
 
@@ -55,7 +49,7 @@ public class SecondFragment extends Fragment {
         binding.buttonSecondNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setCurrentMeal();
+                setCurrentRecipe();
             }
         });
 
@@ -67,7 +61,7 @@ public class SecondFragment extends Fragment {
             }
         });
 
-        setCurrentMeal();
+        setCurrentRecipe();
 
         binding.recipeDescription.setMovementMethod(new ScrollingMovementMethod());
     }
@@ -78,17 +72,18 @@ public class SecondFragment extends Fragment {
         binding = null;
     }
 
-    private void setCurrentMeal() {
-        Random rand = new Random();
-        int currentMealInd = rand.nextInt(meals.size());
+    private void setCurrentRecipe() {
+        Collections.shuffle(recipes);
+        Optional<RecipeModel> currentRecipe = recipes.stream().findAny();
+        Optional<RecipeImageModel> currentImage = images.stream()
+                .filter(image -> image.getRecipeId().equals(currentRecipe.get().getId()))
+                .findFirst();
 
-        Optional<RecipeImageModel> image = imageService.findImageByRecipeId(currentMealInd);
-
-        if (image.isPresent()) {
-            binding.recipeImage.setImageBitmap(image.get().getImage());
+        if (currentImage.isPresent()) {
+            binding.recipeImage.setImageBitmap(currentImage.get().getImage());
         }
 
-        binding.recipeTitle.setText(meals.get(currentMealInd).getTitle());
-        binding.recipeDescription.setText(meals.get(currentMealInd).getDescription());
+        binding.recipeTitle.setText(currentRecipe.get().getTitle());
+        binding.recipeDescription.setText(currentRecipe.get().getDescription());
     }
 }

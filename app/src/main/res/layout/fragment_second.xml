@@ -16,7 +16,6 @@
             android:layout_width="241dp"
             android:layout_height="187dp"
             android:contentDescription="@string/recipeImage"
-            android:src="@drawable/breakfast"
             app:layout_constraintBottom_toTopOf="@+id/recipeDescriptionScrollView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
